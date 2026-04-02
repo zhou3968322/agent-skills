@@ -1,0 +1,39 @@
+{
+  "skill_meta": {
+    "name": "your-skill-name",
+    "display_name": "Your Skill Name",
+    "version": "1.0.0",
+    "author": "your-name",
+    "description": "简短明确的功能描述",
+    "category": "general",
+    "tags": ["template"]
+  },
+  "execution": {
+    "type": "python",
+    "entry": "main.py",
+    "working_dir": ".",
+    "timeout": 30
+  },
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "example_param": {
+        "type": "string",
+        "description": "示例参数"
+      }
+    },
+    "required": ["example_param"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "result": {"type": "string"},
+      "exit_code": {"type": "integer"}
+    }
+  },
+  "platform_compatibility": {
+    "windows": "native",
+    "linux": "native",
+    "macos": "native"
+  }
+}

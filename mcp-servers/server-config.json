@@ -1,0 +1,9 @@
+{
+  "mcp_version": "1.0",
+  "server_name": "agent-skills-mcp",
+  "description": "Agent Skills MCP Server - 跨平台开发工具集合",
+  "includes": [
+    "mcp-servers/code-analyzer.json"
+  ],
+  "default_timeout": 60
+}

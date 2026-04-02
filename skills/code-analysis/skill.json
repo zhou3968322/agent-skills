@@ -1,0 +1,56 @@
+{
+  "skill_meta": {
+    "name": "code-analyzer",
+    "display_name": "代码分析器",
+    "version": "1.2.0",
+    "author": "agent-skills-team",
+    "description": "分析代码复杂度、圈复杂度和潜在问题",
+    "category": "code-quality",
+    "tags": ["python", "complexity", "analysis", "ast"]
+  },
+  "execution": {
+    "type": "python",
+    "entry": "main.py",
+    "working_dir": ".",
+    "timeout": 60
+  },
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "file_path": {
+        "type": "string",
+        "description": "目标文件或目录路径"
+      },
+      "metrics": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["complexity", "maintainability", "security"]
+        },
+        "default": ["complexity"],
+        "description": "要计算的指标列表"
+      },
+      "output_format": {
+        "type": "string",
+        "enum": ["text", "json"],
+        "default": "text",
+        "description": "输出格式"
+      }
+    },
+    "required": ["file_path"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "files_analyzed": {"type": "integer"},
+      "issues": {"type": "array"},
+      "metrics_summary": {"type": "object"},
+      "exit_code": {"type": "integer"}
+    }
+  },
+  "platform_compatibility": {
+    "windows": "native",
+    "linux": "native",
+    "macos": "native"
+  }
+}

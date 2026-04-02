@@ -1,0 +1,50 @@
+{
+  "skill_meta": {
+    "name": "git-batch",
+    "display_name": "Git 批量操作",
+    "version": "1.0.0",
+    "author": "agent-skills-team",
+    "description": "批量 Git 操作（多仓库状态检查、批量提交）",
+    "category": "version-control",
+    "tags": ["git", "batch", "automation"]
+  },
+  "execution": {
+    "type": "python",
+    "entry": "main.py",
+    "working_dir": ".",
+    "timeout": 120
+  },
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "root_dir": {
+        "type": "string",
+        "description": "包含多个 Git 仓库的根目录"
+      },
+      "operation": {
+        "type": "string",
+        "enum": ["status", "pull", "commit-push"],
+        "description": "要执行的操作"
+      },
+      "message": {
+        "type": "string",
+        "description": "commit 消息（operation=commit-push 时使用）"
+      }
+    },
+    "required": ["root_dir", "operation"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "repositories": {"type": "array"},
+      "success_count": {"type": "integer"},
+      "fail_count": {"type": "integer"},
+      "exit_code": {"type": "integer"}
+    }
+  },
+  "platform_compatibility": {
+    "windows": "native",
+    "linux": "native",
+    "macos": "native"
+  }
+}

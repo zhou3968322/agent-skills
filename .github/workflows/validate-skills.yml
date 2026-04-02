@@ -1,0 +1,39 @@
+name: Validate Skills Registry
+
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install jsonschema
+      
+      - name: Validate JSON Schemas
+        run: |
+          python -c "
+          import json
+          import jsonschema
+          
+          with open('schemas/skill-manifest.schema.json') as f:
+              schema = json.load(f)
+              
+          with open('registry.json') as f:
+              registry = json.load(f)
+              
+          for skill in registry['skills']:
+              with open(f\"{skill['path']}/skill.json\") as f:
+                  manifest = json.load(f)
+              jsonschema.validate(manifest, schema)
+              print(f'  {skill[\"name\"]} validated')
+          "
+      
+      - name: Check Cross-Platform Compatibility
+        run: python scripts/check_platform_tags.py

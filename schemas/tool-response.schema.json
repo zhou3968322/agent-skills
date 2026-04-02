@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Agent Skill Tool Response Schema",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "success": {"type": "boolean", "const": true},
+        "data": {"type": "object"},
+        "exit_code": {"type": "integer"}
+      },
+      "required": ["success", "data"]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "error": {"type": "boolean", "const": true},
+        "message": {"type": "string"},
+        "code": {"type": "integer"}
+      },
+      "required": ["error", "message", "code"]
+    }
+  ]
+}

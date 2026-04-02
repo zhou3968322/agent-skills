@@ -1,0 +1,19 @@
+{
+  "mcp_version": "1.0",
+  "server_name": "code-analysis-server",
+  "tools": [
+    {
+      "name": "analyze_complexity",
+      "description": "计算代码圈复杂度并标记高风险函数",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "file_path": {"type": "string"},
+          "threshold": {"type": "integer", "default": 10}
+        },
+        "required": ["file_path"]
+      },
+      "handler": "skills/code-analysis/main.py:analyze_complexity"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Agent Skills Registry - 可调用工具能力清单",
+  "skills": [
+    {
+      "name": "code-analyzer",
+      "path": "skills/code-analysis",
+      "version": "1.2.0",
+      "description": "分析代码复杂度、圈复杂度和潜在问题",
+      "entry_points": {
+        "python": "main.py",
+        "cli": "analyze",
+        "mcp": "mcp-servers/code-analyzer.json"
+      },
+      "platforms": ["windows", "linux", "macos"],
+      "parameters": {
+        "file_path": {"type": "string", "required": true},
+        "metrics": {"type": "array", "enum": ["complexity", "maintainability", "security"]}
+      }
+    },
+    {
+      "name": "git-batch",
+      "path": "skills/git-operations",
+      "version": "1.0.0",
+      "description": "批量 Git 操作（多仓库状态检查、批量提交）",
+      "platforms": ["windows", "linux", "macos"],
+      "shell_specific": true
+    }
+  ]
+}
