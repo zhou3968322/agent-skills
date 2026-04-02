@@ -1,0 +1,56 @@
+{
+  "skill_meta": {
+    "name": "rocm-windows-hipcc-debug",
+    "display_name": "ROCm Windows HIPCC 调试助手",
+    "version": "1.0.0",
+    "author": "agent-skills-team",
+    "description": "诊断 Windows PowerShell 下 hipcc / clang++ -cc1 命令的执行问题，生成 response file 或 --% 绕过方案",
+    "category": "debugging",
+    "tags": ["rocm", "hip", "windows", "powershell", "debugging", "gpu"]
+  },
+  "execution": {
+    "type": "python",
+    "entry": "main.py",
+    "working_dir": ".",
+    "timeout": 120
+  },
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "operation": {
+        "type": "string",
+        "enum": ["diagnose", "to-rsp", "to-stop-parsing"],
+        "description": "要执行的操作"
+      },
+      "command_line": {
+        "type": "string",
+        "description": "原始 hipcc / clang++ 命令（to-rsp / to-stop-parsing 时使用）"
+      },
+      "hip_path": {
+        "type": "string",
+        "default": "C:\\hipSDK",
+        "description": "HIP SDK 安装路径"
+      },
+      "output_format": {
+        "type": "string",
+        "enum": ["text", "json"],
+        "default": "text",
+        "description": "输出格式"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "diagnosis": {"type": "object"},
+      "response_file": {"type": "object"},
+      "stop_parsing": {"type": "object"},
+      "exit_code": {"type": "integer"}
+    }
+  },
+  "platform_compatibility": {
+    "windows": "native",
+    "linux": "unsupported",
+    "macos": "unsupported"
+  }
+}

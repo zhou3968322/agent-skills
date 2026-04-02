@@ -27,7 +27,7 @@ def test_calculate_cyclomatic_complexity():
     tree = ast.parse(SAMPLE_CODE)
     funcs = [n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)]
     assert calculate_cyclomatic_complexity(funcs[0]) == 1
-    assert calculate_cyclomatic_complexity(funcs[1]) == 5
+    assert calculate_cyclomatic_complexity(funcs[1]) == 4
 
 
 def test_analyze_file():

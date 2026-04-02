@@ -25,6 +25,17 @@
       "description": "批量 Git 操作（多仓库状态检查、批量提交）",
       "platforms": ["windows", "linux", "macos"],
       "shell_specific": true
+    },
+    {
+      "name": "rocm-windows-hipcc-debug",
+      "path": "skills/rocm-windows-hipcc-debug",
+      "version": "1.0.0",
+      "description": "诊断 Windows PowerShell 下 hipcc / clang++ -cc1 命令的执行问题，生成 response file 或 --% 绕过方案",
+      "platforms": ["windows"],
+      "entry_points": {
+        "python": "main.py",
+        "cli": "rocm-windows-hipcc-debug"
+      }
     }
   ]
 }
