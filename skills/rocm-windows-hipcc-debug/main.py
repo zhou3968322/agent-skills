@@ -11,6 +11,11 @@ import os
 import shlex
 import subprocess
 import sys
+
+# 确保 Windows 下 stdout 使用 UTF-8，避免中文输出乱码
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 import tempfile
 from pathlib import Path
 
@@ -134,11 +139,14 @@ def main():
         "--hip-path", default=_default_hip_path(), help="HIP SDK 路径（默认从 HIP_PATH 环境变量获取）"
     )
     parser.add_argument(
+        "--query-flags", action="store_true", help="输出 HIPCC 常用调试参数速查表"
+    )
+    parser.add_argument(
         "--json", action="store_true", help="JSON 输出"
     )
     args = parser.parse_args()
 
-    if not any([args.diagnose, args.to_rsp, args.to_stop_parsing]):
+    if not any([args.diagnose, args.to_rsp, args.to_stop_parsing, args.query_flags]):
         parser.print_help()
         sys.exit(1)
 
@@ -153,8 +161,18 @@ def main():
     if args.to_stop_parsing:
         results["stop_parsing"] = generate_stop_parsing_command(args.to_stop_parsing)
 
+    if args.query_flags:
+        flags_md = Path(__file__).with_name("HIPCC_OPTIONS.md")
+        flags_content = flags_md.read_text(encoding="utf-8") if flags_md.exists() else "HIPCC_OPTIONS.md not found."
+        results["query_flags"] = {
+            "file": str(flags_md),
+            "content": flags_content,
+        }
+
     if args.json:
-        print(json.dumps(results, indent=2, ensure_ascii=False))
+        json_bytes = json.dumps(results, indent=2, ensure_ascii=False).encode("utf-8")
+        sys.stdout.buffer.write(json_bytes)
+        sys.stdout.buffer.write(b"\n")
     else:
         if "diagnosis" in results:
             d = results["diagnosis"]
@@ -189,6 +207,10 @@ def main():
             else:
                 print("\n=== Stop-Parsing PowerShell Command ===")
                 print(f"  {s['powershell_command']}")
+
+        if "query_flags" in results:
+            print("\n=== HIPCC Common Flags Cheatsheet ===")
+            print(results["query_flags"]["content"])
 
     has_error = any(
         v.get("error")
