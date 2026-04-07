@@ -36,6 +36,28 @@
         "python": "main.py",
         "cli": "rocm-windows-hipcc-debug"
       }
+    },
+    {
+      "name": "nas-file-download",
+      "path": "skills/nas-file-download",
+      "version": "1.0.0",
+      "description": "从 Synology NAS 下载文件到本地目录，支持用户名密码认证",
+      "platforms": ["windows", "linux", "macos"],
+      "entry_points": {
+        "python": "main.py",
+        "cli": "nas-download"
+      }
+    },
+    {
+      "name": "nas-file-batch-download",
+      "path": "skills/nas-file-batch-download",
+      "version": "1.0.0",
+      "description": "从 Synology NAS 批量下载多个文件到本地目录，支持命令行参数配置",
+      "platforms": ["windows", "linux", "macos"],
+      "entry_points": {
+        "python": "main.py",
+        "cli": "nas-batch-download"
+      }
     }
   ]
 }

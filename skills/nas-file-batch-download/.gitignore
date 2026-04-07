@@ -1,0 +1,46 @@
+# Downloaded files
+downloads/
+*.zip
+*.tar.gz
+*.tar.bz2
+
+# Binary config files (contains sensitive info)
+SW_LSCLR_BinaryMsg.json
+*_BinaryMsg.json
+*.json
+
+# Extracted directories
+*-install/
+comgr-install/
+devlib-lst-install/
+llvm-lst-install/
+rocm_systems-install/
+hip*-install/
+roc*-install/
+
+# Output directories
+temp_*/
+
+# Temporary files
+*.tmp
+*.temp
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Test outputs
+test_output/
+test_downloads/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

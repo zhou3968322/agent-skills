@@ -1,0 +1,72 @@
+{
+  "skill_meta": {
+    "name": "nas-file-download",
+    "display_name": "NAS 文件下载",
+    "version": "1.0.0",
+    "author": "agent-skills-team",
+    "description": "从 Synology NAS 下载文件到当前目录",
+    "category": "file-transfer",
+    "tags": ["nas", "synology", "download", "file"]
+  },
+  "execution": {
+    "type": "python",
+    "entry": "main.py",
+    "working_dir": ".",
+    "timeout": 300
+  },
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "nas_host": {
+        "type": "string",
+        "description": "NAS IP 地址或主机名",
+        "default": "10.2.8.100"
+      },
+      "nas_port": {
+        "type": "string",
+        "description": "NAS 端口",
+        "default": "5001"
+      },
+      "user": {
+        "type": "string",
+        "description": "NAS 用户名",
+        "required": true
+      },
+      "password": {
+        "type": "string",
+        "description": "NAS 密码",
+        "required": true
+      },
+      "remote_path": {
+        "type": "string",
+        "description": "NAS 上的文件路径，例如 /folder/file.zip",
+        "required": true
+      },
+      "output_dir": {
+        "type": "string",
+        "description": "本地保存目录，默认为当前目录",
+        "default": "."
+      },
+      "secure": {
+        "type": "boolean",
+        "description": "使用 HTTPS",
+        "default": true
+      }
+    },
+    "required": ["user", "password", "remote_path"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "success": {"type": "boolean"},
+      "file_path": {"type": "string"},
+      "file_size": {"type": "integer"},
+      "message": {"type": "string"}
+    }
+  },
+  "platform_compatibility": {
+    "windows": "native",
+    "linux": "native",
+    "macos": "native"
+  }
+}
