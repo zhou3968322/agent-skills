@@ -1,0 +1,23 @@
+{
+  "name": "差异分析",
+  "version": "1.0.0",
+  "description": "【Anthropic官方】专业的财务差异分析工具。将财务差异分解为驱动因素，提供叙述性解释和瀑布分析。适用于分析预算与实际对比、期间变化、收入或费用差异，或为管理层准备差异说明。",
+  "triggers": [
+    "差异分析",
+    "variance analysis",
+    "预算分析",
+    "波动分析",
+    "waterfall analysis"
+  ],
+  "category": [
+    "金融"
+  ],
+  "tags": [
+    "差异分析",
+    "预算分析",
+    "财务分析",
+    "Anthropic",
+    "官方"
+  ],
+  "author": "Anthropic"
+}

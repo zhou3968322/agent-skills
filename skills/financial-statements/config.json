@@ -1,0 +1,24 @@
+{
+  "name": "财务报表生成",
+  "version": "1.0.0",
+  "description": "【Anthropic官方】专业的财务报表生成工具。生成符合GAAP标准的损益表、资产负债表和现金流量表，支持期间对比分析。适用于编制财务报表、运行波动分析或创建带差异说明的损益报告。",
+  "triggers": [
+    "财务报表",
+    "financial statements",
+    "income statement",
+    "balance sheet",
+    "cash flow"
+  ],
+  "category": [
+    "金融"
+  ],
+  "tags": [
+    "财务报表",
+    "GAAP",
+    "损益表",
+    "资产负债表",
+    "Anthropic",
+    "官方"
+  ],
+  "author": "Anthropic"
+}

@@ -78,6 +78,13 @@ python skills/llm-api-client/scripts/llm_client.py --provider openai --model gpt
 | `nas-file-download` | NAS 文件下载 | All | ❌ |
 | `nas-file-batch-download` | NAS 批量文件下载 | All | ❌ |
 
+### 财务分析
+
+| 技能名称 | 能力描述 | 平台支持 | MCP |
+|---------|---------|---------|-----|
+| `variance-analysis` | 财务差异分析、驱动因素分解、瀑布分析（Anthropic 官方） | All | ❌ |
+| `financial-statements` | GAAP 标准财务报表生成、期间对比分析（Anthropic 官方） | All | ❌ |
+
 ### 办公协作
 
 | 技能名称 | 能力描述 | 平台支持 | MCP |
@@ -142,6 +149,24 @@ response = client.complete(messages=[...], model="gpt-4")
 飞书多维表格（Bitable）管理，支持 27 种字段类型、高级筛选、批量操作。
 
 > 使用此技能需要飞书应用授权，详见 [SKILL.md](skills/feishu-bitable/SKILL.md)
+
+### variance-analysis
+【Anthropic 官方】专业的财务差异分析工具。将财务差异分解为驱动因素，提供叙述性解释和瀑布分析。
+
+- 支持 Price/Volume 分解、Rate/Mix 分解、Headcount/Compensation 分解
+- 生成 materiality thresholds 和调查优先级
+- 提供 text-based waterfall 格式和预算vs实际vs预测对比框架
+
+详见 [SKILL.md](skills/variance-analysis/SKILL.md)
+
+### financial-statements
+【Anthropic 官方】专业的财务报表生成工具。生成符合 GAAP 标准的损益表、资产负债表和现金流量表。
+
+- 支持 ASC 220 / ASC 210 / ASC 230 标准的报表格式
+- 包含常见期末调整（accruals、折旧摊销、坏账准备等）
+- 提供 flux analysis methodology 和差异分解方法
+
+详见 [SKILL.md](skills/financial-statements/SKILL.md)
 
 ---
 
