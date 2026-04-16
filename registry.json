@@ -58,6 +58,62 @@
         "python": "main.py",
         "cli": "nas-batch-download"
       }
+    },
+    {
+      "name": "arxiv-reader",
+      "path": "skills/arxiv-reader",
+      "version": "1.0.0",
+      "description": "arXiv论文助手-免费：基于 data.rag.ac.cn 的 arXiv 论文 API，支持获取论文元数据、摘要、全文等",
+      "platforms": ["windows", "linux", "macos"],
+      "entry_points": {
+        "python": "scripts/arxiv_client.py",
+        "cli": "arxiv-client"
+      },
+      "parameters": {
+        "token": {"type": "string", "required": true, "description": "API Token from data.rag.ac.cn"},
+        "arxiv_id": {"type": "string", "required": true, "description": "arXiv paper ID"},
+        "type": {"type": "string", "enum": ["brief", "raw", "head", "section"], "default": "brief"}
+      }
+    },
+    {
+      "name": "stock-analysis",
+      "path": "skills/stock-analysis",
+      "version": "1.0.0",
+      "description": "股票个股分析，支持多数据源自动切换（新浪财经/东方财富），计算技术指标（MA/MACD/RSI）和支撑位压力位，识别缺口并判断支撑压力",
+      "platforms": ["windows", "linux", "macos"],
+      "entry_points": {
+        "python": "scripts/analyze_stock.py",
+        "cli": "stock-analyze"
+      },
+      "dependencies": ["requests", "numpy", "pandas"]
+    },
+    {
+      "name": "llm-api-client",
+      "path": "skills/llm-api-client",
+      "version": "1.0.0",
+      "description": "统一 REST API 客户端，支持调用多种 LLM 提供商（OpenAI、Anthropic、Google、Volcengine/豆包等）",
+      "platforms": ["windows", "linux", "macos"],
+      "entry_points": {
+        "python": "scripts/llm_client.py",
+        "cli": "llm-client"
+      },
+      "supported_providers": ["openai", "anthropic", "google", "gemini", "volcengine", "doubao"]
+    },
+    {
+      "name": "feishu-calendar",
+      "path": "skills/feishu-calendar",
+      "version": "1.0.0",
+      "description": "飞书日历与日程管理工具，支持日程创建、查询、更新、删除，以及忙闲状态查询",
+      "platforms": ["windows", "linux", "macos"],
+      "tags": ["飞书", "日历", "日程管理", "忙闲查询"]
+    },
+    {
+      "name": "feishu-bitable",
+      "path": "skills/feishu-bitable",
+      "version": "1.0.0",
+      "description": "飞书多维表格（Bitable）的创建、查询、编辑和管理工具，包含27种字段类型支持、高级筛选、批量操作",
+      "platforms": ["windows", "linux", "macos"],
+      "tags": ["飞书", "多维表格", "Bitable", "数据管理"]
     }
   ]
 }

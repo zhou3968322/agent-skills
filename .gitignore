@@ -3,6 +3,9 @@
 .skills-temp/
 mcp-server.log
 agent-outputs/
+temp_prompt.txt
+temp_*.txt
+*.tmp
 
 # Python
 __pycache__/

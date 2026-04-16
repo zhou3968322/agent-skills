@@ -43,44 +43,135 @@ result = skill.execute(file_path="./src", metrics=["complexity"])
 
 ### 直接脚本调用
 ```bash
-# 保持向后兼容
+# 代码分析
 ./skills/code-analysis/main.py ./src --json
+
+# arXiv 论文查询
+python skills/arxiv-reader/scripts/arxiv_client.py --id 2604.05843 --type brief
+
+# 股票分析
+python skills/stock-analysis/scripts/fetch_stock_data.py --stock_code 000001
+
+# LLM API 调用
+python skills/llm-api-client/scripts/llm_client.py --provider openai --model gpt-4 --message "Hello"
 ```
 
 ## 技能目录
+
+### 开发工具
 
 | 技能名称 | 能力描述 | 平台支持 | MCP |
 |---------|---------|---------|-----|
 | `code-analyzer` | 代码质量分析、复杂度计算 | All | ✅ |
 | `git-batch` | 多仓库批量操作 | All | ✅ |
-| `test-runner` | 智能测试发现与执行 | All | ✅ |
-| `env-setup` | 开发环境一键配置 | Win/Linux | ✅ |
-| `log-parser` | 结构化日志分析 | All | ✅ |
+| `testing-automation` | 智能测试发现与执行 | All | ❌ |
+| `file-processing` | 文件处理工具集 | All | ❌ |
+| `rocm-windows-hipcc-debug` | ROCm/hipcc Windows 调试 | Windows | ❌ |
+
+### 数据与网络
+
+| 技能名称 | 能力描述 | 平台支持 | MCP |
+|---------|---------|---------|-----|
+| `arxiv-reader` | arXiv 论文获取与分析 | All | ❌ |
+| `stock-analysis` | 股票技术分析（MA/MACD/RSI/缺口） | All | ❌ |
+| `llm-api-client` | 统一 LLM API 客户端（OpenAI/Anthropic/豆包等） | All | ❌ |
+| `nas-file-download` | NAS 文件下载 | All | ❌ |
+| `nas-file-batch-download` | NAS 批量文件下载 | All | ❌ |
+
+### 办公协作
+
+| 技能名称 | 能力描述 | 平台支持 | MCP |
+|---------|---------|---------|-----|
+| `feishu-calendar` | 飞书日历与日程管理 | All | ❌ |
+| `feishu-bitable` | 飞书多维表格数据管理 | All | ❌ |
+
+### 系统管理
+
+| 技能名称 | 能力描述 | 平台支持 | MCP |
+|---------|---------|---------|-----|
+| `system-admin` | 系统管理工具集 | All | ❌ |
+
+---
+
+## 技能详情
+
+### arxiv-reader
+基于 [data.rag.ac.cn](https://data.rag.ac.cn) 的免费 arXiv API，支持获取论文元数据、摘要、全文。
+
+```bash
+# 获取论文元数据
+python skills/arxiv-reader/scripts/arxiv_client.py --token YOUR_TOKEN --id 2604.05843 --type brief
+
+# Python 调用
+from skills.arxiv_reader.scripts.arxiv_client import ArxivClient
+client = ArxivClient(token="your-token")
+meta = client.get_brief("2604.05843")
+```
+
+### stock-analysis
+股票个股分析，支持多数据源自动切换（新浪财经/东方财富），计算技术指标和支撑位压力位。
+
+```bash
+# 获取数据并分析
+python skills/stock-analysis/scripts/fetch_stock_data.py --stock_code 002639 --days 30
+python skills/stock-analysis/scripts/analyze_stock.py --data_file stock_data_002639.json
+```
+
+### llm-api-client
+统一 REST API 客户端，支持多种 LLM 提供商：OpenAI、Anthropic、Google Gemini、Volcengine（豆包）等。
+
+```bash
+# 调用豆包模型
+python skills/llm-api-client/scripts/llm_client.py \
+  --provider volcengine \
+  --model doubao-seed-2-0-pro-260215 \
+  --message "你好"
+
+# Python 调用
+from skills.llm_api_client.scripts.llm_client import LLMClient
+client = LLMClient(provider="openai", api_key="sk-...")
+response = client.complete(messages=[...], model="gpt-4")
+```
+
+### feishu-calendar
+飞书日历与日程管理，支持日程创建、查询、忙闲状态查询等功能。
+
+> 使用此技能需要飞书应用授权，详见 [SKILL.md](skills/feishu-calendar/SKILL.md)
+
+### feishu-bitable
+飞书多维表格（Bitable）管理，支持 27 种字段类型、高级筛选、批量操作。
+
+> 使用此技能需要飞书应用授权，详见 [SKILL.md](skills/feishu-bitable/SKILL.md)
+
+---
 
 ## 技能开发规范
 
-每个技能必须包含 `skill.json` 元数据文件：
+每个技能目录必须包含 `SKILL.md` 元数据文件（YAML frontmatter + Markdown 说明）：
 
-```json
-{
-  "skill_meta": {
-    "name": "your-skill-name",
-    "version": "1.0.0",
-    "description": "简短明确的功能描述"
-  },
-  "execution": {
-    "type": "python",
-    "entry": "main.py"
-  },
-  "input_schema": { ... },
-  "output_schema": { ... }
-}
+```markdown
+---
+name: your-skill-name
+description: 简短明确的功能描述，说明何时使用此技能
+---
+
+# 技能名称
+
+## 功能概述
+...
 ```
 
-**平台适配指南**：
-- 纯 Python 逻辑放 `main.py`（跨平台）
-- 系统特定命令放 `win/` 或 `unix/` 子目录
-- 使用 `subprocess` 调用 shell 脚本时提供适配层
+**可选资源目录**:
+- `scripts/` - 可执行脚本（Python/Bash 等）
+- `references/` - 参考文档
+- `assets/` - 模板文件
+
+**平台适配指南**:
+- 纯 Python 逻辑放 `scripts/*.py`（跨平台）
+- 系统特定命令提供适配层
+- 复杂依赖项在 SKILL.md 中声明
+
+---
 
 ## 环境要求
 
@@ -88,15 +179,32 @@ result = skill.execute(file_path="./src", metrics=["complexity"])
 - **PowerShell**: 7.0+ (Windows)
 - **Bash**: 4.0+ (Linux/macOS)
 
+### 依赖安装
+
+```bash
+# 股票分析依赖
+pip install requests numpy pandas
+
+# LLM API 客户端依赖
+pip install openai anthropic google-generativeai requests
+
+# arXiv 阅读器依赖
+pip install requests
+```
+
+---
+
 ## 贡献新技能
 
-1. 复制 `skills/_template/` 目录
-2. 填写 `skill.json` 元数据
-3. 实现主逻辑（支持 `--json` 输出便于 Agent 解析）
-4. 添加测试用例至 `tests/skills/`
-5. 更新 `registry.json`
+1. 在 `skills/` 下创建新目录
+2. 编写 `SKILL.md` 元数据和说明文档
+3. 实现主逻辑脚本（支持 `--json` 输出便于 Agent 解析）
+4. 更新 `registry.json` 注册表
+5. 更新 `README.md` 技能目录
 
 详见 [CONTRIBUTING.md](CONTRIBUTING.md)
+
+---
 
 ## 许可证
 
